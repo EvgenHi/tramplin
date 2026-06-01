@@ -50,6 +50,8 @@ Set these variables on the frontend service:
 | `TRAMPLIN_API_URL` | Optional server-side API base URL. Use the backend public URL or a Railway private-network URL with `/v1`. |
 
 The frontend uses its own Dockerfile and Next.js standalone output, so Railway runs the built server with `node server.js`. It also includes a standalone `/health` route for Railway healthchecks, so healthchecks do not depend on the API being reachable from the home page.
+The frontend includes a standalone `/health` route for Railway healthchecks, so
+healthchecks do not depend on the API being reachable from the home page.
 
 ## 4. After the first deploy
 
