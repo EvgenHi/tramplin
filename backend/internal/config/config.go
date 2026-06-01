@@ -40,13 +40,13 @@ type Config struct {
 }
 
 func Load() Config {
-	databaseURL := os.Getenv("TRAMPLIN_DATABASE_URL")
+	databaseURL := firstEnv("TRAMPLIN_DATABASE_URL", "DATABASE_URL")
 	if databaseURL == "" {
 		databaseURL = buildDatabaseURL()
 	}
 
 	return Config{
-		HTTPAddr:                env("TRAMPLIN_HTTP_ADDR", ":8080"),
+		HTTPAddr:                httpAddr(),
 		TokenSecret:             env("TRAMPLIN_TOKEN_SECRET", "dev-secret-change-me"),
 		AccessTokenTTL:          15 * time.Minute,
 		RefreshTokenTTL:         7 * 24 * time.Hour,
@@ -98,6 +98,25 @@ func (c Config) ValidateObjectStorage() error {
 		return nil
 	}
 	return fmt.Errorf("object storage configuration is incomplete")
+}
+
+func httpAddr() string {
+	if value := os.Getenv("TRAMPLIN_HTTP_ADDR"); value != "" {
+		return value
+	}
+	if port := os.Getenv("PORT"); port != "" {
+		return ":" + port
+	}
+	return ":8080"
+}
+
+func firstEnv(keys ...string) string {
+	for _, key := range keys {
+		if value := os.Getenv(key); value != "" {
+			return value
+		}
+	}
+	return ""
 }
 
 func env(key, fallback string) string {
