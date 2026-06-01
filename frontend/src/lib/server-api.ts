@@ -9,8 +9,10 @@ import {
   type CurrentUser,
 } from "@/lib/api";
 
+const SERVER_API_BASE = process.env.TRAMPLIN_API_URL ?? API_BASE;
+
 function apiUrl(path: string) {
-  return `${API_BASE}${path.startsWith("/") ? path : `/${path}`}`;
+  return `${SERVER_API_BASE}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
 async function parseJson<T>(response: Response): Promise<T> {

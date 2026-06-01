@@ -1,19 +1,8 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Serif, Manrope } from "next/font/google";
 import "leaflet/dist/leaflet.css";
 
 import "@/app/globals.css";
 
-const sans = Manrope({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-sans",
-});
-
-const serif = IBM_Plex_Serif({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "600"],
-  variable: "--font-serif",
-});
 
 export const metadata: Metadata = {
   title: "Tramplin",
@@ -28,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${sans.variable} ${serif.variable}`}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

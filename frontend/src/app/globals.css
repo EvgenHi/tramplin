@@ -1,4 +1,6 @@
 :root {
+    --font-sans: Manrope, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
     --bg: #eff4f2;
     --bg-soft: #f8faf8;
     --bg-panel: rgba(255, 255, 255, 0.74);
