@@ -1,9 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentType, type ReactNode } from "react";
 import { MapContainer, Marker, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
+
+type LeafletComponentProps = Record<string, unknown> & {
+  children?: ReactNode;
+};
+
+const LeafletMapContainer = MapContainer as unknown as ComponentType<LeafletComponentProps>;
+const LeafletMarker = Marker as unknown as ComponentType<LeafletComponentProps>;
+const LeafletTileLayer = TileLayer as unknown as ComponentType<LeafletComponentProps>;
 
 import {
   composeLocation,
@@ -216,9 +224,9 @@ export function OpportunityMap({
         <small>Точки ставятся по адресу, а если его нет, то по координатам города.</small>
       </div>
 
-      <MapContainer center={[56.5, 52]} zoom={4} scrollWheelZoom className="map-surface">
+      <LeafletMapContainer center={[56.5, 52]} zoom={4} scrollWheelZoom className="map-surface">
         <KeepMapSized />
-        <TileLayer
+        <LeafletTileLayer
           attribution='&copy; OpenStreetMap contributors &copy; CARTO'
           detectRetina
           subdomains={["a", "b", "c", "d"]}
@@ -230,7 +238,7 @@ export function OpportunityMap({
           const isActive = item.id === visibleActiveId;
 
           return (
-            <Marker
+            <LeafletMarker
               key={item.id}
               position={[item.markerLat, item.markerLng]}
               icon={createMarkerIcon({ isPinned, isActive })}
@@ -242,7 +250,7 @@ export function OpportunityMap({
             />
           );
         })}
-      </MapContainer>
+      </LeafletMapContainer>
 
       {activeItem ? (
         <div
