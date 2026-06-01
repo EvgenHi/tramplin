@@ -32,7 +32,7 @@ Current implementation status:
 
 Database configuration:
 
-- The backend accepts either `TRAMPLIN_DATABASE_URL` or granular PostgreSQL env vars.
+- The backend accepts `TRAMPLIN_DATABASE_URL`, Railway-compatible `DATABASE_URL`, or granular PostgreSQL env vars.
 - If `TRAMPLIN_DATABASE_URL` is not set, the backend builds one from:
   `TRAMPLIN_DATABASE_HOST`, `TRAMPLIN_DATABASE_PORT`, `TRAMPLIN_DATABASE_USER`,
   `TRAMPLIN_DATABASE_PASSWORD`, `TRAMPLIN_DATABASE_NAME`, and `TRAMPLIN_DATABASE_SSLMODE`.
@@ -108,6 +108,14 @@ Docker files:
 - `Dockerfile`
 - `compose.yml`
 - `docker/entrypoint.sh`
+
+Railway deployment:
+
+- deploy the backend as a service rooted at `/backend`;
+- use `backend/railway.json` for the Dockerfile builder, `/health/ready` healthcheck, and restart policy;
+- set either Railway's `DATABASE_URL` or `TRAMPLIN_DATABASE_URL`;
+- leave `TRAMPLIN_HTTP_ADDR` unset so the API listens on Railway's injected `PORT`;
+- see `../docs/railway-deployment.md` for the full backend/frontend setup.
 
 GitHub Actions container publishing:
 
